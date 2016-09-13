@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>接收端</title>
+    <style>
+        .value{width: 200px;height:200px;border:1px solid;text-align: center; margin-top:200px;margin-left:200px;line-height: 200px;display: block;position: absolute;}
+    </style>
+</head>
+<body>
+<div id="mess">websocket练习：注意这是一个群组接收端，div的位置会被当前服务中的多人操作影响！网络不流畅时会有延迟。</div>
+<div class="kuang">
+    <div class="value" id="value1">杨浩东的位置</div>
+</div>
+<script>
+    var mess = document.getElementById("mess");
+    if(window.WebSocket){
+        var ws = new WebSocket('ws://127.0.0.1:8001');
+        ws.onopen = function(e){
+            console.log("连接服务器成功");
+            ws.send("game2");
+        }
+        ws.onclose = function(e){
+            console.log("服务器关闭");
+        }
+        ws.onerror = function(){
+            console.log("连接出错");
+        }
+        ws.onmessage = function(e){
+            var string = e.data;
+            var ss = string.split(",");
+            document.getElementById("value1").style.marginTop="+"+ss[0]+"px";
+            document.getElementById("value1").style.marginLeft="+"+ss[1]+"px";
+            console.log(e.data)
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作端</title>
+    <style>
+        .value{width: 200px;height:200px;border:1px solid;text-align: center; margin-top:200px;margin-left:200px;line-height: 200px;display: block;position: absolute;}
+    </style>
+</head>
+<body>
+<div id="mess">正在连接...</div>
+<div class="kuang">
+    <div class="value" id="value1">杨浩东的位置</div>
+</div>
+<script>
+   // !(function(){})()
+
+
+
+    var mess = document.getElementById("mess");
+    var ws = new WebSocket('ws://127.0.0.1:8001');
+    if(window.WebSocket){
+        ws.onopen = function(e){
+            console.log("连接服务器成功");
+            ws.send("game1");
+        }
+        ws.onclose = function(e){
+            console.log("服务器关闭");
+        }
+        ws.onerror = function(){
+            console.log("连接出错");
+        }
+        ws.onmessage = function(e){
+            mess.innerHTML = "连接成功，按住“w,s,a,d或方向键，test2.html中的div位置会跟随test.html中的位置！"
+            document.onkeydown = test;
+        }
+    }
+
+
+   var _top=200;
+   var _left=200;
+
+   var positionXY=[]
+   var moveForward,moveLeft,moveBackward,moveRight
+   function test(){
+
+       var onKeyDown = function ( event ) {
+
+           switch ( event.keyCode ) {
+
+               case 38: // up
+               case 87: // w
+                   moveForward = true;
+                   break;
+
+               case 37: // left
+               case 65: // a
+                   moveLeft = true; break;
+
+               case 40: // down
+               case 83: // s
+                   moveBackward = true;
+                   break;
+
+               case 39: // right
+               case 68: // d
+                   moveRight = true;
+                   break;
+           }
+       };
+
+       var onKeyUp = function ( event ) {
+
+           switch( event.keyCode ) {
+
+               case 38: // up
+               case 87: // w
+                   moveForward = false;
+                   break;
+
+               case 37: // left
+               case 65: // a
+                   moveLeft = false;
+                   break;
+
+               case 40: // down
+               case 83: // s
+                   moveBackward = false;
+                   break;
+
+               case 39: // right
+               case 68: // d
+                   moveRight = false;
+                   break;
+
+           }
+
+       };
+
+       document.addEventListener( 'keydown', onKeyDown, false );
+       document.addEventListener( 'keyup', onKeyUp, false );
+
+
+       if(moveForward){
+           //w
+           _top=_top-3;
+           document.getElementById("value1").style.marginTop="+"+_top+"px";
+           console.log(_top)
+           positionXY=[_top,_left]
+           ws.send(positionXY);
+       }
+       if(moveBackward){
+           //s
+           _top=_top+3;
+           document.getElementById("value1").style.marginTop="+"+_top+"px";
+           console.log(_top)
+           positionXY=[_top,_left]
+           ws.send(positionXY);
+       }
+       if(moveLeft){
+           //a
+           _left=_left-3;
+           document.getElementById("value1").style.marginLeft="+"+_left+"px";
+           positionXY=[_top,_left]
+           ws.send(positionXY);
+       }
+       if(moveRight){
+           //d
+           _left=_left+3;
+           document.getElementById("value1").style.marginLeft="+"+_left+"px";
+           positionXY=[_top,_left]
+           ws.send(positionXY);
+       }
+
+   }
+</script>
+</body>
+</html>

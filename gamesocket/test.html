@@ -10,7 +10,7 @@
 <body>
 <div id="mess">正在连接...</div>
 <div class="kuang">
-    <div class="value" id="value1">杨浩东的位置</div>
+    <div class="value" id="value1">盒子的位置</div>
 </div>
 <script>
    // !(function(){})()
@@ -44,6 +44,7 @@
    var moveForward,moveLeft,moveBackward,moveRight
    function test(){
 
+       //监听按键状态
        var onKeyDown = function ( event ) {
 
            switch ( event.keyCode ) {
@@ -106,7 +107,10 @@
            _top=_top-3;
            document.getElementById("value1").style.marginTop="+"+_top+"px";
            console.log(_top)
+
+           //将盒子个坐标赋值给一个数组
            positionXY=[_top,_left]
+           //将当前位置的数组positionXY推送到服务器
            ws.send(positionXY);
        }
        if(moveBackward){

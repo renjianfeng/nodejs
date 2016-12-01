@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="D:/apache-maven-3.3.3" />
-        <option name="userSettingsFile" value="D:\apache-maven-3.3.3\conf\settings.xml" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="FLOW" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
